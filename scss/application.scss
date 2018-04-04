@@ -93,13 +93,14 @@ svg {
 
 }
 
-.close {
+.close, .arrow {
   font-family: "Verdana",sans-serif;
   font-size: 50px;
   font-weight: 100;
   line-height: 1;
   color: #fff;
   margin-right: 10px;
+  text-align: right;
 }
 
 
@@ -139,6 +140,7 @@ p#sum {
   color:black!important;
   text-align: center;
   vertical-align: middle!important;
+  margin-top: 5vh;
 }
 
 p.price {
@@ -202,5 +204,9 @@ p.price {
   width:60vw!important;
   margin-top: 10vh!important;
   height: 80vh;
+}
+
+.arrow {
+
 }
 

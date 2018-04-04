@@ -1,348 +1,163 @@
-$(document).ready(function () {
+var width = window.innerWidth - 50,
+    height = window.innerHeight - 30;
 
-    // ---- Defining some custom events here
+var svg = d3.select("#map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-    // 1st step filter event
-    $('#picker-year').on('change', function () {
-        $(this).trigger('filter1-changed');
-    });
 
-    $('#picker-media-type').on('change', function () {
-        $(this).trigger('filter1-changed');
-    });
+d3.json("data/kazakhstan_QGIS.geojson", function (data) {
+    var center = d3.geo.centroid(data);
+    var scale = window.innerWidth;
+    var offset = [width / 2, height / 2];
+    var projection = d3.geo.mercator().scale(scale).center(center)
+        .translate(offset);
 
-    $('#picker-region').on('change', function () {
-        $(this).trigger('filter1-changed');
-    });
 
-    $('#pill1').on('show.bs.tab', function() {
-        $(this).trigger('pill1-selected');
-    });
+    var path = d3.geo.path()
+        .projection(projection);
 
-    $('#pill2').on('show.bs.tab', function(e) {
-        $(this).trigger('pill2-selected')
-    });
+    svg.selectAll("path") // selects path elements, will make them if they don't exist
+        .data(data.features) // iterates over geo feature
+        .enter() // adds feature if it doesn't exist as an element
+        .append("path") // defines element as a path
+        .attr("d", path) // path generator translates geo data to SVG
+        .attr("class", "regions-chart")//
+        .on("mouseover", function (d) {
+            d3.select(this).style('fill', 'green');//
+        })
+        .on('mouseout', function (d) {
+            d3.select(this).style('fill', '#ffd400');
+        })
+        .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
 
-    // -------
-
-    var data;
-    var state = {
-        'picker-year': {},
-        'picker-media-type': {},
-        'picker-region': {},
-        active_pill: 'media',
-        selected_medias: [],
-        selected_orgs: []
-    };
-
-    var activePill = function() {
-        return state.active_pill=='media' ? $('#pill1-table') : $('#pill2-table');
-    };
-
-    var data_filtered;
-    var data_nested;
-//    var data_pill_page;
-
-    var filter1 = function (o) {
-        var years = state['picker-year'];
-        var fit_year = 'all' in years ? true : o.year in years;
-
-        return fit_year
-            && o.type in state['picker-media-type']
-            && o.region in state['picker-region'];
-    };
-
-    var areaFormatterGenerator = function(max) {
-        var comma = /\,/g;
-        var dot = /\./g;
-
-        var basic = function(d) {return d3.format(',.1f')(d).replace(dot, ',').replace(',0', '')};
-
-        if (max == 0) return basic;
-        if (max >= 1000000000) return function(d) {return basic(d / 1000000000)};
-        if (max >= 1000000) return function(d) {return basic(d / 1000000)};
-        if (max >= 1000) return function(d) {return basic(d / 1000)};
-        return basic;
-    };
-
-    var verbosedFormatter = function(d) {
-        var comma = /\,/g;
-        var dot = /\./g;
-        var basic = function(d) {return d3.format(',.1f')(d).replace(dot, ',')};
-
-        if (d == 0) return 0;
-        if (d >= 1000000000) return basic(d / 1000000000) + " млрд";
-        if (d >= 1000000) return basic(d / 1000000) + " млн";
-        if (d >= 1000) return basic(d / 1000) + " тыс.";
-        return basic(d);
-    };
-
-    // Same without redundant zero (101,0 -> 101)
-    var verbosedNoZeroFormatter = function(d) {
-        return (verbosedFormatter(d) + "").replace(',0', '');
-    };
-
-    var units = "тенге";
-    var unitsFormatter = function(d) {return verbosedFormatter(d) + " " + units};
-    var unitsNoZeroFormatter = function(d) {return verbosedNoZeroFormatter(d) + " " + units};
-
-    // Init charts
-    year_chart
-        .area_chart(area_chart)
-        .formatterGenerator(areaFormatterGenerator)
-        .init({selector: ".area-chart", width: 225, height: 140});
-
-    regions_chart
-        .formatter(unitsNoZeroFormatter)
-        .init({selector: ".regions-chart"});
-
-    sankey_chart
-        .formatter(unitsNoZeroFormatter)
-        .maxNodes(20)
-        .init({selector: ".sankey-chart"});
-
-    total_chart
-        .selector("#total-number")
-        .formatter(verbosedFormatter);
-
-    sankey_caption
-        .selector("#sankey-caption");
-
-    // -----------------------------------------------
-
-    d3.csv("data.csv", function (error, json) {
-        if (error) return console.warn(error);
-
-        data = json;
-
-        $('body').on('pill1-selected', function(e) {
-            activePill().bootstrapTable("uncheckAll");
-            if (state.active_pill == "media") return;
-            state.active_pill = "media";
-            updateNested(data_filtered);
-            reddish();
+    var label = svg.selectAll("text")
+        .data(data.features)
+        .enter()
+        .append("g")
+        .attr("class", "label")
+        .attr("transform", function (d) {
+            return "translate(" + path.centroid(d) + ")";
         });
 
-        $('body').on('pill2-selected', function(e) {
-            activePill().bootstrapTable("uncheckAll");
-            if (state.active_pill == "client") return;
-            state.active_pill = "client";
-            updateNested(data_filtered);
-            violettish();
+
+    label.append('text')
+        .each(function (d) { //.each не потребує return
+            var first = d.properties.VARNAME_1.split("-", 2);//якщо назва має дефіс, то переносимо на два рядки
+            for (i = 0; i < first.length; i++) {
+                d3.select(this).append("tspan")
+                    .text(first[i])
+                    .attr("dy", i ? "1.2em" : 0)
+                    .attr("x", 0)
+                    .attr("text-anchor", "middle");
+            }
         });
-
-        $('#pill1-table, #pill2-table').on('page-change.bs.table', function (e, number, size) {
-            updateSankey();
-            activePill().bootstrapTable("uncheckAll");
-        });
-
-        $('body').on('filter1-changed', function (e, dont_update) {
-            var selected = $(e.target).find("option:selected")
-                .toArray()
-                .map(function (o) {return $(o).val()})
-                .reduce(function (o, v, i) { //reducing to an object (set)
-                    o[v] = true;
-                    return o;
-                }, {});
-            state[e.target.id] = selected;
-            if (!dont_update) updateFilter1();
-        });
-
-        // On check/uncheck single row
-        // Check
-        $("#pill1-table, #pill2-table").on('check.bs.table', function(e, row) {
-            $('.close-div').remove();
-            var td = activePill().find('tr.selected').find('td')[2];
-            $(td).append("<div class='close-div'>&#10006</div>");
-
-            updateGrantTableAndCharts(row);
-            updateSankey(row);
-            showGrants(row.values.v);
-        });
-
-        // Uncheck
-        $("#pill1-table, #pill2-table").on('uncheck.bs.table', function(e, row) {
-            $('.close-div').remove();
-            updateGrantTableAndCharts(data_nested);
-            updateSankey();
-            hideGrants();
-        });
-
-        // Uncheck All
-        $("#pill1-table, #pill2-table").on('uncheck-all.bs.table', function(e, row) {
-            $('.close-div').remove();
-            updateGrantTableAndCharts(data_nested);
-            updateSankey();
-            hideGrants();
-        });
-
-        // ----------------------------------------------------
-
-        // Initial event triggering
-        // Update only only on the last event
-        $('#picker-year').trigger('filter1-changed', true);
-        $('#picker-media-type').trigger('filter1-changed', true);
-        $('#picker-region').trigger('filter1-changed');
-
-        $('#pill1-table').trigger('pill1-selected');
-    });
-
-    function reddish() {
-        $('.charts-container').removeClass("Violet");
-        $('.charts-container').addClass("Red");
-    }
-
-    function violettish() {
-        $('.charts-container').removeClass("Red");
-        $('.charts-container').addClass("Violet");
-    }
-
-    function updateGrantTableAndCharts(nested_grants_data) {
-        var single = !Array.isArray(nested_grants_data);
-
-        if (single) nested_grants_data = [nested_grants_data];
-
-        var grants_data = nested_grants_data.reduce(function(o, v, i) {
-            Array.prototype.push.apply(o, v.values.v);
-            return o;
-        }, []);
-
-        var years_d = years_data(grants_data);
-        year_chart.update(years_d);
-        regions_chart.update(regions(grants_data));
-
-        var total_summ = d3.sum(years_d, function(d) {return +d.money});
-        total_chart.update(total_summ);
-    }
-
-    function updateSankey(row) {
-        var active_pill = activePill();
-        var data = row ? [row] : active_pill.bootstrapTable('getData', true);
-
-        var grants_data = data.reduce(function(o, v, i) {
-            Array.prototype.push.apply(o, v.values.v);
-            return o;
-        }, []);
-
-        var activeClass = state.active_pill == 'media' ? 'Red' : 'Violet';
-        sankey_chart.redraw(grants_data, activeClass);
-        if (row) sankey_caption.updateSingle(row.key, state.active_pill);
-        else sankey_caption.updateRange(active_pill, state.active_pill);
-    }
-
-    function updateFilter1() {
-        activePill().bootstrapTable('showLoading');
-        data_filtered = data.filter(filter1);
-        updateNested(data_filtered);
-        hideGrants();
-    }
-
-    function updateNested(data_filtered) {
-        var active_pill = activePill();
-        active_pill.bootstrapTable('showLoading');
-        data_nested = d3.nest()
-            .key(function (d) {
-                return d[state.active_pill];
-            })
-            .rollup(function(v) { return {v: v, sum: d3.sum(v, function(d) { return d.money; })} })
-            .entries(data_filtered)
-            .sort(function(a, b) {return d3.descending(a.values.sum, b.values.sum)})
-            .map(function(d) {d.sum = d.values.sum; return d});
-
-
-        active_pill.bootstrapTable('load', data_nested);
-        active_pill.bootstrapTable('hideLoading');
-
-        updateGrantTableAndCharts(data_nested);
-        updateSankey();
-    }
-
-    function years_data(data) {
-        var min = 2009;
-        var max = 2016;
-        var rollup = d3.nest()
-            .key(function(d) {return d.year})
-            .rollup(function(v) {return d3.sum(v, function(d) {return d.money})});
-
-        var years_data = rollup
-            .entries(data)
-            .map(function (d) {
-                return {year: +d.key, money: +d.values};
-            });
-
-        var years_set = rollup
-            .map(data);
-
-        var year = function(d) {return d.year};
-
-        //Return as is if single year
-        if (!('all' in state['picker-year'])) return years_data;
-
-        // Use this to show only years presented in data
-//        var min = d3.min(years_data, year);
-//        var max = d3.max(years_data, year);
-
-        // Else fulfill year gaps with zeros
-        for (var i = min; i <= max; i++) {
-            if (!(i in years_set)) years_data.push({year:i, money:0});
-        }
-
-        years_data.sort(function(a, b) {return a.year - b.year});
-        return years_data;
-    }
-
-    // Returns a map of regions and money {"Region 1": 1000, ...}
-    function regions(data) {
-        var res =  data.reduce(function(o, v, i) {
-            if (!o[v.region]) o[v.region] = +v.money;
-            else o[v.region] += +v.money;
-            return o;
-        }, {});
-        res["Республика Казахстан"] = 0;
-        return res;
-    }
-
-    function hideGrants() {
-        $('.grants-container').hide();
-        $('#table-grants').bootstrapTable('load', []);
-    }
-
-    function showGrants(data) {
-        $('#table-grants').bootstrapTable('load', data);
-        $('.grants-container').show();
-//        checkScrollBars();
-    }
-
-//    var checkScrollBars = function(){
-//        console.log("changed");
-//        var b = $('body');
-//        var normalw = 0;
-//        var scrollw = 0;
-//        console.log(b.prop('scrollHeight'));
-//        console.log(b.height());
-//        if(b.prop('scrollHeight')>b.height()){
-//
-//            normalw = window.innerWidth;
-//            scrollw = normalw - b.width();
-//            $('.main-container').css({marginRight:'-'+scrollw+'px'});
-//        }
-//    }
-
-    // Feature. Now we can click on sankey node and appropriate data record will be selected
-
-    $(document).on('active-node-click', 'g.node', function(e, data) {
-        var table = activePill();
-        var options = table.bootstrapTable('getOptions');
-        var page_data = table.bootstrapTable("getData", true);
-
-        var idx = indexOfName(page_data, data.name) + (options.pageNumber - 1) * options.pageSize;
-        table.bootstrapTable("check", idx);
-    });
-
-    function indexOfName(data, name) {
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].key == name) return i;
-        }
-    }
 });
 
+
+//створюємо набір даних з усіма варіантами карток, картинок до них і вартістю
+var cardCases = [
+    {type: "квартиры", image: "img/appartment.png", price: 9000000, unit: "шт"},
+    {type: "школы", image: "img/school.png", price: 9000000, unit: "шт"},
+    {type: "пенсии", image: "img/pension.png", price: 9000000, unit: "шт"},
+    {type: "золотые медали на олимпиаде", image: "img/medal.png", price: 9000000, unit: "шт"},
+    {type: "дороги", image: "img/road.png", price: 9000000, unit: "км"},
+    {type: "трансплантаций сердца", image: "img/heart.png", price: 9000000, unit: ""},
+    {type: "выплаты на новорожденного", image: "img/bitth_allowance.png", price: 9000000, unit: ""},
+    {type: "уголь", image: "img/coal.png", price: 9000000, unit: "т"}
+];
+
+//функція, що виконується по кліку на область карти
+var testFun = function (d) {
+    d3.select("#overlay").style("display", "block");
+
+    var cont3 = d3.select("#block_purple");
+    var cont4 = d3.select("#block_green");
+    var cont5 = d3.select("#block_blue");
+    var sum = d3.select("div#block_yellow1 > p#sum")
+        .text();
+    sum = sum.replace(/\s/g, '');
+
+
+    //обираємо три випадкових порівння для картки з даних cardCases
+    //TODO доробити, аби не було повторів у random виборі
+    var rand3 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    var rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    var rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
+
+    if (rand4 === rand3) {
+        rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    }
+
+    if (rand5 === rand4 || rand5 === rand3) {
+        rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    }
+
+
+    //додаємо random картку в першу колонку
+    cont3.selectAll('h4').remove();
+    cont3.selectAll('img').remove();
+    cont3.selectAll('p').remove();
+    cont3.append('h4')
+        .attr('class', 'centered')
+        .html(function () {
+            return rand3.type;
+        });
+    cont3.append('img')
+        .attr('id', 'pic1')
+        .attr('src', function () {
+            return rand3.image;
+        });
+    cont3.append('p')
+        .attr('class', 'price')
+        .html(function () {
+            return "X " + Math.round(sum / rand3.price);
+        });
+
+    //додаємо random картку в другу колонку
+    cont4.selectAll('h4').remove();
+    cont4.selectAll('img').remove();
+    cont4.selectAll('p').remove();
+    cont4.append('h4')
+        .attr('class', 'centered')
+        .html(function () {
+            return rand4.type;
+        });
+    cont4.append('img')
+        .attr('id', 'pic2')
+        .attr('src', function () {
+            return rand4.image;
+        });
+    cont4.append('p')
+        .attr('class', 'price')
+        .html(function () {
+            return "X " + Math.round(sum / rand4.price);
+        });
+
+
+    //додаємо random картку в третю колонку
+    cont5.selectAll('h4').remove();
+    cont5.selectAll('img').remove();
+    cont5.selectAll('p').remove();
+    cont5.append('h4')
+        .attr('class', 'centered')
+        .html(function () {
+            return rand5.type;
+        });
+    cont5.append('img')
+        .attr('id', 'pic3')
+        .attr('src', function () {
+            return rand5.image;
+        });
+    cont5.append('p')
+        .attr('class', 'price')
+        .html(function () {
+            return "X " + Math.round(sum / rand5.price);
+        });
+}; //end of testFun function
+
+
+//закриваємо popup вікно
+d3.select(".close").on("click", function (d) {
+    d3.select("#overlay").style("display", "none");
+});

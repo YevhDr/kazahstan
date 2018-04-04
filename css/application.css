@@ -71,13 +71,14 @@ svg {
   margin-top: 10px;
   position: fixed; }
 
-.close {
+.close, .arrow {
   font-family: "Verdana",sans-serif;
   font-size: 50px;
   font-weight: 100;
   line-height: 1;
   color: #fff;
-  margin-right: 10px; }
+  margin-right: 10px;
+  text-align: right; }
 
 .fa {
   font-size: 30px !important; }
@@ -106,7 +107,8 @@ p#sum {
   letter-spacing: 2px;
   color: black !important;
   text-align: center;
-  vertical-align: middle !important; }
+  vertical-align: middle !important;
+  margin-top: 5vh; }
 
 p.price {
   font-size: 30px;
