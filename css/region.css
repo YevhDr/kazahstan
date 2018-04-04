@@ -1,0 +1,40 @@
+.regions-chart {
+    padding: 0;
+}
+
+.regions-chart path {
+    stroke: #f2f2f2;
+}
+
+.Red .q0-15 { fill: #cccccc; }
+.Red .q1-15 { fill: #cdc0c0; }
+.Red .q2-15 { fill: #ceb5b4; }
+.Red .q3-15 { fill: #cfaaa8; }
+.Red .q4-15 { fill: #d09f9c; }
+.Red .q5-15 { fill: #d19490; }
+.Red .q6-15 { fill: #d28984; }
+.Red .q7-15 { fill: #d37e79; }
+.Red .q8-15 { fill: #d4726d; }
+.Red .q9-15 { fill: #d56761; }
+.Red .q10-15 { fill: #d65c55; }
+.Red .q11-15 { fill: #d75149; }
+.Red .q12-15 { fill: #d8463d; }
+.Red .q13-15 { fill: #d93b31; }
+.Red .q14-15 { fill: #DB3026; }
+
+.Violet .q0-15 { fill: #cccccc; }
+.Violet .q1-15 { fill: #c3c2c4; }
+.Violet .q2-15 { fill: #bab8bc; }
+.Violet .q3-15 { fill: #b1aeb4; }
+.Violet .q4-15 { fill: #a8a5ac; }
+.Violet .q5-15 { fill: #9f9ba4; }
+.Violet .q6-15 { fill: #96919c; }
+.Violet .q7-15 { fill: #8d8894; }
+.Violet .q8-15 { fill: #847e8c; }
+.Violet .q9-15 { fill: #7b7484; }
+.Violet .q10-15 { fill: #726a7c; }
+.Violet .q11-15 { fill: #696174; }
+.Violet .q12-15 { fill: #60576c; }
+.Violet .q13-15 { fill: #574d64; }
+.Violet .q14-15 { fill: #4e445c; }
+
