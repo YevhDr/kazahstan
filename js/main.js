@@ -37,7 +37,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
             .each(function () {
                 d3.select(this)
                     .datum(function () {
-                        var polygon = this;
+                        var polygon = this; //отримується коректно, виділяє полігон області
                         var polygonParent = this.parentNode;
                         var bbox = polygon.getBBox(); //!!!!!!!!!!!!!
                         // var gClass = this.classList.value;
