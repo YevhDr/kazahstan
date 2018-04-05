@@ -24,31 +24,37 @@
                         class="fa fa-twitter-square"></i></a>
             </div>
             <div class="col-sm-offset-8 col-sm-1">
-                <p class="arrow" onclick="testFun()"><i class="fa fa-angle-right"></i></p>
+                <img class="arrow" onclick="testFun()" src="img/arrow2.svg"/>
             </div>
             <div class="col-sm-1">
-                <a class="close" href="#overlay">&times;</a>
+                <a class="cross" href="#overlay"><img class="close-img" src="img/close2.svg"/></a>
             </div>
         </div>
 
         <div class="row">
-            <div id="block_red" class="col-sm-4" style="height: 25vh">
+            <div id="block_red" class="col-sm-4">
+                <!--h4 має бути змінною з бази даних ЗМІ-->
                 <h4 style="margin-left:10px;">Казахстанская правда, АО Республиканская газета</h4>
             </div>
-            <div id="block_yellow1" class="col-sm-8" style="height: 25vh">
+            <div id="block_yellow1" class="col-sm-8">
+                <!--подвійний фон жовтого блоку-->
+                <div id="yellow-test1" class="col-sm-6"></div>
+                <div id="yellow-test2" class="col-sm-6"></div>
+
+                <!--p#sum має бути змінною з бази даних ЗМІ-->
                 <p id="sum">4 047 941 989</p>
             </div>
         </div>
 
 
         <div class="row">
-            <div id="block_purple" class="col-sm-4" style="height: 45vh;">
+            <div id="block_purple" class="col-sm-4">
 
             </div>
-            <div id="block_green" class="col-sm-4" style="height: 45vh;">
+            <div id="block_green" class="col-sm-4">
 
             </div>
-            <div id="block_blue" class="col-sm-4" style="height: 45vh;">
+            <div id="block_blue" class="col-sm-4">
 
             </div>
         </div>
@@ -87,6 +93,7 @@
 </div>
 
 <script src="lib/d3.min.js"></script>
+<!--<script src="https://d3js.org/queue.v1.min.js"></script>-->
 <script src="js/main.js"></script>
 
 

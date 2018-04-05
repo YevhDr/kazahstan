@@ -1,58 +1,124 @@
-var width = window.innerWidth - 50,
-    height = window.innerHeight - 30;
+var width = window.innerWidth * 0.8,
+    height = window.innerHeight * 0.8;
 
-var svg = d3.select("#map").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+
+
+/*--------------- Варіант # 1 з намальованою svg картою Казахстану----------------------------*/
 
 
 d3.json("data/kazakhstan_QGIS.geojson", function (data) {
-    var center = d3.geo.centroid(data);
-    var scale = window.innerWidth;
-    var offset = [width / 2, height / 2];
-    var projection = d3.geo.mercator().scale(scale).center(center)
-        .translate(offset);
+
+    d3.xml("img/map_clear2.svg").mimeType("image/svg+xml").get(function (error, xml) {
+        if (error) {
+            throw error
+        }
+
+        d3.select("#map").node().appendChild(xml.documentElement);
 
 
-    var path = d3.geo.path()
-        .projection(projection);
+        var svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height);
 
-    svg.selectAll("path") // selects path elements, will make them if they don't exist
-        .data(data.features) // iterates over geo feature
-        .enter() // adds feature if it doesn't exist as an element
-        .append("path") // defines element as a path
-        .attr("d", path) // path generator translates geo data to SVG
-        .attr("class", "regions-chart")//
-        .on("mouseover", function (d) {
-            d3.select(this).style('fill', 'green');//
-        })
-        .on('mouseout', function (d) {
-            d3.select(this).style('fill', '#ffd400');
-        })
-        .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
+        var path = svg.selectAll("path")
+            .attr("id", "regions-chart")
+            .on("mouseover", function (d) {
+                d3.select(this).style('fill', 'lightgrey');//
+            })
+            .on('mouseout', function (d) {
+                d3.select(this).style('fill', '#ffd400');
 
-    var label = svg.selectAll("text")
-        .data(data.features)
-        .enter()
-        .append("g")
-        .attr("class", "label")
-        .attr("transform", function (d) {
-            return "translate(" + path.centroid(d) + ")";
-        });
+            })
+            .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
 
+        //ПРОБЛЕМА!!!!!
+        // polygon.getBBox() некоректно отримує висоту, ширину та x/y координати полігона
+        svg.selectAll("#regions-chart")
+            .each(function () {
+                d3.select(this)
+                    .datum(function () {
+                        var polygon = this;
+                        var polygonParent = this.parentNode;
+                        var bbox = polygon.getBBox(); //!!!!!!!!!!!!!
+                        var gClass = this.classList.value;
+                        return data.features
+                            .filter(function (d) {
+                                if (d.properties.NAME_1 === gClass){
+                                    // alert(d.properties.NAME_1 + gClass);
+                                    d3.select(polygonParent)
+                                        .append('g')
+                                        .attr("class", "label")
+                                        .attr('cx', bbox.x)
+                                        .attr('cy', bbox.y)
+                                        .append('text')
+                                        .text(d.properties.VARNAME_1);
+                                }
+                            })
+                    })
+                });
+    });
 
-    label.append('text')
-        .each(function (d) { //.each не потребує return
-            var first = d.properties.VARNAME_1.split("-", 2);//якщо назва має дефіс, то переносимо на два рядки
-            for (i = 0; i < first.length; i++) {
-                d3.select(this).append("tspan")
-                    .text(first[i])
-                    .attr("dy", i ? "1.2em" : 0)
-                    .attr("x", 0)
-                    .attr("text-anchor", "middle");
-            }
-        });
 });
+
+
+/*--------------- Варіант # 2 з geojson  картою Казахстану ----------------------------*/
+//
+// var svg = d3.select("#map").append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
+
+// d3.json("data/kazakhstan_QGIS.geojson", function (data) {
+//     var center = d3.geo.centroid(data);
+//     var scale = window.innerWidth;
+//     var offset = [width / 2, height / 2];
+//     var projection = d3.geo.mercator().scale(scale).center(center)
+//         .translate(offset);
+//
+//
+//     var path = d3.geo.path()
+//         .projection(projection);
+//
+//     // svg.append('image')
+//     //     .attr('src', 'img/map_clear.svg');
+//
+//     svg.selectAll("path") // selects path elements, will make them if they don't exist
+//         .data(data.features) // iterates over geo feature
+//         .enter() // adds feature if it doesn't exist as an element
+//         .append("path") // defines element as a path
+//         .attr("d", path) // path generator translates geo data to SVG
+//         .attr("class", "regions-chart")//
+//         .on("mouseover", function (d) {
+//             d3.select(this).style('fill', 'green');//
+//         })
+//         .on('mouseout', function (d) {
+//             d3.select(this).style('fill', '#ffd400');
+//         })
+//         .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
+//
+//     var label = svg.selectAll("text")
+//         .data(data.features)
+//         .enter()
+//         .append("g")
+//         .attr("class", "label")
+//         .attr("transform", function (d) {
+//             return "translate(" + path.centroid(d) + ")";
+//         });
+//
+//
+//     label.append('text')
+//         .each(function (d) { //.each не потребує return
+//             var first = d.properties.VARNAME_1.split("-", 2);//якщо назва має дефіс, то переносимо на два рядки
+//             for (i = 0; i < first.length; i++) {
+//                 d3.select(this).append("tspan")
+//                     .text(first[i])
+//                     .attr("dy", i ? "1.2em" : 0)
+//                     .attr("x", 0)
+//                     .attr("text-anchor", "middle");
+//             }
+//         });
+// });
+// end of Варіант # 2
+
 
 
 //створюємо набір даних з усіма варіантами карток, картинок до них і вартістю
@@ -74,7 +140,7 @@ var testFun = function (d) {
     var cont3 = d3.select("#block_purple");
     var cont4 = d3.select("#block_green");
     var cont5 = d3.select("#block_blue");
-    var sum = d3.select("div#block_yellow1 > p#sum")
+    var sum = d3.select("div#block_yellow1 > p#sum") // суму фінансування видання
         .text();
     sum = sum.replace(/\s/g, '');
 
@@ -111,7 +177,7 @@ var testFun = function (d) {
     cont3.append('p')
         .attr('class', 'price')
         .html(function () {
-            return "X " + Math.round(sum / rand3.price);
+            return "x " + Math.round(sum / rand3.price); //сума фінансування поділена на вартість послуги
         });
 
     //додаємо random картку в другу колонку
@@ -131,7 +197,7 @@ var testFun = function (d) {
     cont4.append('p')
         .attr('class', 'price')
         .html(function () {
-            return "X " + Math.round(sum / rand4.price);
+            return "x " + Math.round(sum / rand4.price);
         });
 
 
@@ -152,12 +218,12 @@ var testFun = function (d) {
     cont5.append('p')
         .attr('class', 'price')
         .html(function () {
-            return "X " + Math.round(sum / rand5.price);
+            return "x " + Math.round(sum / rand5.price);
         });
 }; //end of testFun function
 
 
 //закриваємо popup вікно
-d3.select(".close").on("click", function (d) {
+d3.select(".cross").on("click", function (d) {
     d3.select("#overlay").style("display", "none");
 });

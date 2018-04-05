@@ -46,22 +46,21 @@ h3 {
 svg {
   margin: 0;
   position:absolute;
-  top: 0;
-  left: 0;
+  top: 10vh;
+  left: 10vw;
 }
 
 #map {
   z-index: 0;
 }
 
-.regions-chart {
+#regions-chart {
   padding: 5px;
   fill: #ffd400;
   //stroke: blue;
   //stroke-width: 3px;
   /*stroke-opacity: 1;*/
   -webkit-background-clip: content;
-
 }
 
 .regions-chart path {
@@ -78,10 +77,34 @@ svg {
   cursor: default;
   font-size:11px;
   color: #2e2e2e;
+  position:absolute;
 }
 
 
-/* card */
+/*--------------------------
+ --------- card -----------*/
+
+#overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 5;
+  display:none;
+}
+
+.container {
+  margin-left:20vw!important;
+  margin-right:20vw!important;
+  width:60vw!important;
+  margin-top: 10vh!important;
+  height: 80vh;
+}
+
 
 #popup1 {
   z-index: 5;
@@ -90,34 +113,27 @@ svg {
 .social-icons {
   margin-top:10px;
   position: fixed;
-
 }
 
-.close, .arrow {
-  font-family: "Verdana",sans-serif;
-  font-size: 50px;
-  font-weight: 100;
-  line-height: 1;
-  color: #fff;
-  margin-right: 10px;
-  text-align: right;
+.close-img, .arrow {
+  height: 50%;
+  width:50%;
+  margin-top:10px;
+  cursor: pointer;
 }
-
-
 
 .fa {
   font-size: 30px!important;
 }
 
 .fa-twitter-square {
-  //background-color:white;
   padding: 3px;
   color: white;
   float: right;
   cursor: pointer;
   border-radius: 5px;
   &:hover{
-    color: orange;
+    color: yellow;
   }
 }
 
@@ -132,16 +148,67 @@ h4 {
   text-align: center;
 }
 
+//red block
+
+#block_yellow1, #block_red {
+  height: 25vh;
+}
+
+#block_red {
+  background: linear-gradient(to left top, #ba356a  50%, #9a2748 50%);
+}
+
+//yellow block
+
+#yellow-test1 {
+  position:absolute;
+  top:0;
+  left:0;
+  height:25vh;
+  background-repeat: repeat-y;
+  background: linear-gradient(to left top, yellow 50%, orange 50%);
+}
+
+#yellow-test2 {
+  position:absolute;
+  top:0;
+  left:50%;
+  height:25vh;
+  background-repeat: repeat-y;
+  background: linear-gradient(to left top, yellow 50%, orange 50%);
+}
 
 p#sum {
+  width:80%;
+  top:25%;
+  left:10%;
   font-size:48px;
   font-weight: 800;
   letter-spacing:2px;
   color:black!important;
-  text-align: center;
-  vertical-align: middle!important;
-  margin-top: 5vh;
+  position:absolute;
 }
+
+// others
+
+#block_blue,
+#block_purple,
+#block_green {
+  height: 45vh;
+}
+
+#block_blue {
+  background: linear-gradient(to left top, #014fef  50% /*bottom-right color*/, #3437aa 50% /*top-left color*/);
+}
+
+#block_purple {
+  background: linear-gradient(to left top, #7b357e  50%,  #6b316e 50% );
+}
+
+#block_green {
+  background: linear-gradient(to left top, #0f9a95  50%, #0f796f 50% );
+}
+
 
 p.price {
   font-size:30px;
@@ -157,56 +224,43 @@ p.price {
 #pic1, #pic2, #pic3 {
   position:absolute;
   width: 20vw;
-  top: 10%;
+  top: 5%;
   left: 5px;
 }
 
 
-#block_blue {
-  background: linear-gradient(to left top, #014fef  50% /*bottom-right color*/, #3437aa 50% /*top-left color*/);
-}
-
-#block_red {
-  background: linear-gradient(to left top, #ba356a  50%, #9a2748 50%);
-}
-
-#block_purple {
-  background: linear-gradient(to left top, #7b357e  50%,  #6b316e 50% );
-}
-
-#block_green {
-  background: linear-gradient(to left top, #0f9a95  50%, #0f796f 50% );
-}
-
-#block_yellow1 {
-  background-repeat: repeat-y;
-  //width:33%;
-  background: linear-gradient(to left top, yellow 50%, orange 50%);
-
-}
-
-#overlay {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 5;
-    display:none;
-  }
-
-.container {
-  margin-left:20vw!important;
-  margin-right:20vw!important;
-  width:60vw!important;
-  margin-top: 10vh!important;
-  height: 80vh;
-}
-
-.arrow {
-
-}
-
+/////////////////test
+/* style.css */
+//.region.republic {
+//  fill: #fee391;
+//  stroke: #333;
+//  stroke-width: 1px;
+//}
+//.active
+//{fill: #f29929;
+//}
+//.hover
+//{fill: #fee391;
+//}
+//.highlight
+//{fill: #fec44f;
+//}
+//
+//.region.NI {
+//  fill: #aaa;
+//  stroke: #aaa;
+//}
+//
+//rect {
+//  fill: none;
+//  pointer-events: all;
+//}
+//
+//.text { stroke:#333;
+//  text-anchor: middle;
+//  font-family: "sans-serif";
+//  stroke-width: 0.5;
+//  fill: #333;
+//  font-size: 10pt;
+//}
+//
