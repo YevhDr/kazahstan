@@ -21,7 +21,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
             .attr("height", height);
 
         var path = svg.selectAll("path")
-            .attr("id", "regions-chart")
+            .attr("class", "regions-chart")
             .on("mouseover", function (d) {
                 d3.select(this).style('fill', 'lightgrey');//
             })
@@ -33,18 +33,20 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 
         //ПРОБЛЕМА!!!!!
         // polygon.getBBox() некоректно отримує висоту, ширину та x/y координати полігона
-        svg.selectAll("#regions-chart")
+        svg.selectAll(".regions-chart")
             .each(function () {
                 d3.select(this)
                     .datum(function () {
                         var polygon = this;
                         var polygonParent = this.parentNode;
                         var bbox = polygon.getBBox(); //!!!!!!!!!!!!!
-                        var gClass = this.classList.value;
+                        // var gClass = this.classList.value;
+                        var gId = this.id;
+                        // alert(gId);
                         return data.features
                             .filter(function (d) {
-                                if (d.properties.NAME_1 === gClass){
-                                    // alert(d.properties.NAME_1 + gClass);
+                                if (d.properties.NAME_1 === gId){
+                                    // alert(d.properties.NAME_1 + gId);
                                     d3.select(polygonParent)
                                         .append('g')
                                         .attr("class", "label")
