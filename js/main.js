@@ -139,11 +139,14 @@ var cardCases = [
 //функція, що виконується по кліку на область карти
 var testFun = function (d) {
     d3.select("#overlay").style("display", "block");
-
+    var cont1 = d3.select("#block_red"); //змінна для назви ЗМІ
+    var cont2 = d3.select("#block_yellow1"); // змінна для суми
+    
+    // котейнери для випадкових карток
     var cont3 = d3.select("#block_purple");
     var cont4 = d3.select("#block_green");
     var cont5 = d3.select("#block_blue");
-    var sum = d3.select("div#block_yellow1 > p#sum") // суму фінансування видання
+    var sum = d3.select("div#block_yellow1 > p#sum") // сума фінансування видання
         .text();
     sum = sum.replace(/\s/g, '');
 
