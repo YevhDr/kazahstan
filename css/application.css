@@ -142,14 +142,14 @@ h4 {
   background: linear-gradient(to left top, yellow 50%, orange 50%); }
 
 p#sum {
-  width: 80%;
-  top: 25%;
-  left: 10%;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 800;
   letter-spacing: 2px;
   color: black !important;
-  position: absolute; }
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-40%, -40%); }
 
 #block_blue,
 #block_purple,
@@ -168,11 +168,11 @@ p#sum {
 p.price {
   font-size: 30px;
   font-weight: 800;
-  text-align: center;
   color: white;
   position: absolute;
   bottom: 10px;
-  left: 35%; }
+  left: 50%;
+  transform: translate(-50%); }
 
 #pic1, #pic2, #pic3 {
   position: absolute;

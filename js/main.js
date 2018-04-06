@@ -128,7 +128,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 var cardCases = [
     {type: "квартиры", image: "img/appartment.png", price: 9000000, unit: "шт"},
     {type: "школы", image: "img/school.png", price: 9000000, unit: "шт"},
-    {type: "пенсии", image: "img/pension.png", price: 9000000, unit: "шт"},
+    {type: "пенсии", image: "img/pension.png", price: 23689, unit: "шт"},
     {type: "золотые медали на олимпиаде", image: "img/medal.png", price: 9000000, unit: "шт"},
     {type: "дороги", image: "img/road.png", price: 9000000, unit: "км"},
     {type: "трансплантаций сердца", image: "img/heart.png", price: 9000000, unit: ""},
