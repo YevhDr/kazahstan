@@ -39,9 +39,8 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                     .datum(function () {
                         var polygon = this; //отримується коректно
                         var polygonParent = this.parentNode;
-                        var bbox = polygon.getBBox(); //!!!!!!!!!!!!!
-                        // var gClass = this.classList.value;
                         var gId = this.id;
+                        var bbox = polygon.getBoundingClientRect();
                         // alert(gId);
                         return data.features
                             .filter(function (d) {
@@ -49,11 +48,10 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                                     // alert(d.properties.NAME_1 + gId);
                                     d3.select(polygonParent)
                                         .append('g')
-
-                                        .attr('cx', bbox.x)
-                                        .attr('cy', bbox.y)
-                                        .append('text')
+                                        .attr('x', bbox.x)
+                                        .attr('y', bbox.y)
                                         .attr("class", "label")
+                                        .append('text')
                                         .text(d.properties.VARNAME_1);
                                 }
                             })
