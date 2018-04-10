@@ -1,6 +1,7 @@
 body {
   background: url(../img/map_background.jpg) no-repeat;
-  background-size: 100vw 100vh; }
+  background-size: 100vw 100vh;
+  font-size: 14px; }
 
 .abs-top {
   position: absolute;
@@ -19,21 +20,22 @@ h1, h2 {
   margin-left: 10%; }
 
 h1 {
-  font-size: 48px;
+  font-size: 5rem;
   font-weight: 800;
   letter-spacing: 2px; }
 
 h2 {
-  font-size: 24px;
-  line-height: 30px;
-  font-weight: 800; }
+  font-size: 2.0rem;
+  line-height: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 2px; }
 
 h3 {
   margin-left: 10%;
   color: white;
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 25px; }
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: 800; }
 
 svg {
   margin: 0;
@@ -113,9 +115,9 @@ h4 {
   margin-top: 20px;
   margin-bottom: 20px;
   color: white;
-  font-size: 20px;
+  font-size: 1.5rem;
+  line-height: 2rem;
   font-weight: 800;
-  line-height: 25px;
   text-align: center; }
 
 #social-close {
@@ -228,14 +230,14 @@ h4 {
   background: linear-gradient(to left top, yellow 50%, orange 50%); }
 
 p#sum {
-  font-size: 40px;
+  font-size: 3.5rem;
   font-weight: 800;
   letter-spacing: 2px;
   color: black !important;
   position: absolute;
   top: 40%;
-  left: 40%;
-  transform: translate(-40%, -40%); }
+  left: 25%;
+  transform: translate(-20%, -40%); }
 
 #block_blue,
 #block_purple,
@@ -316,7 +318,8 @@ p#sum {
   background: linear-gradient(to left top, #0f9a95 50%, #0f796f 50%); }
 
 p.price {
-  font-size: 30px;
+  font-size: 2rem;
+  line-height: 2rem;
   font-weight: 800;
   color: white;
   position: absolute;
@@ -324,7 +327,7 @@ p.price {
   left: 50%;
   transform: translate(-50%); }
 
-#pic1, #pic2, #pic3 {
+.pic {
   position: absolute;
   width: 20vw;
   top: 50%;

@@ -1,5 +1,5 @@
 var width = window.innerWidth * 0.8,
-    height = window.innerHeight * 0.7;
+    height = window.innerHeight * 0.75;
 
 
 /*--------------- Варіант # 1 з намальованою svg картою Казахстану----------------------------*/
