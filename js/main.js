@@ -8,7 +8,7 @@ var width = window.innerWidth * 0.8,
 
 d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 
-    d3.xml("img/map_clear2.svg").mimeType("image/svg+xml").get(function (error, xml) {
+    d3.xml("img/map_clear.svg").mimeType("image/svg+xml").get(function (error, xml) {
         if (error) {
             throw error
         }
@@ -23,10 +23,10 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
         var path = svg.selectAll("path")
             .attr("class", "regions-chart")
             .on("mouseover", function (d) {
-                d3.select(this).style('fill', 'lightgrey');//
+                d3.select(this).style('cursor', 'pointer');//
             })
             .on('mouseout', function (d) {
-                d3.select(this).style('fill', '#ffd400');
+                d3.select(this).style('cursor', 'default');
 
             })
             .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
@@ -48,8 +48,11 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                                     // alert(d.properties.NAME_1 + gId);
                                     d3.select(polygonParent)
                                         .append('g')
-                                        .attr('x', bbox.x)
-                                        .attr('y', bbox.y)
+                                        // .attr("transform", function (d) {
+                                        //  return "translate(" + bbox.x + bbox.y  + ")";
+                                        //  })
+                                        .attr('x', 400000)
+                                        .attr('y', 400000)
                                         .attr("class", "label")
                                         .append('text')
                                         .text(d.properties.VARNAME_1);
@@ -67,7 +70,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 // var svg = d3.select("#map").append("svg")
 //     .attr("width", width)
 //     .attr("height", height);
-
+//
 // d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 //     var center = d3.geo.centroid(data);
 //     var scale = window.innerWidth;
@@ -150,18 +153,18 @@ var testFun = function (d) {
 
 
     //обираємо три випадкових порівння для картки з даних cardCases
-    //TODO доробити, аби не було повторів у random виборі
     var rand3 = cardCases[Math.floor(Math.random() * cardCases.length)];
     var rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
-    var rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
-
-    if (rand4 === rand3) {
-        rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    while(rand4.type === rand3.type) {
+       rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
     }
-
-    if (rand5 === rand4 || rand5 === rand3) {
+    var rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    while(rand5.type === rand4.type || rand5.type === rand3.type) {
         rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
     }
+   
+    
+    
 
 
     //додаємо random картку в першу колонку
@@ -231,3 +234,22 @@ var testFun = function (d) {
 d3.select(".cross").on("click", function (d) {
     d3.select("#overlay").style("display", "none");
 });
+
+
+Array.prototype.contains = function (v) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+    }
+    return false;
+};
+
+//
+// var rand = [];
+// rand.push("Нерелігійні організації");
+// data.forEach(function (d, i) {
+//     d.orgs.forEach(function (k, j) {
+//         if (!cs.contains(k.section)) {
+//             cs.push(k.section);
+//         }
+//     })
+// });
