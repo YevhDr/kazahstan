@@ -2,7 +2,6 @@ var width = window.innerWidth * 0.8,
     height = window.innerHeight * 0.8;
 
 
-
 /*--------------- Варіант # 1 з намальованою svg картою Казахстану----------------------------*/
 
 
@@ -44,7 +43,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                         // alert(gId);
                         return data.features
                             .filter(function (d) {
-                                if (d.properties.NAME_1 === gId){
+                                if (d.properties.NAME_1 === gId) {
                                     // alert(d.properties.NAME_1 + gId);
                                     d3.select(polygonParent)
                                         .append('g')
@@ -59,7 +58,7 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                                 }
                             })
                     })
-                });
+            });
     });
 
 });
@@ -124,8 +123,8 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 // end of Варіант # 2
 
 
-
 //створюємо набір даних з усіма варіантами карток, картинок до них і вартістю
+//ЗАРАЗ ТУТ ТЕСТОВИЙ НАБІР
 var cardCases = [
     {type: "квартиры", image: "img/appartment.png", price: 9000000, unit: "шт"},
     {type: "школы", image: "img/school.png", price: 9000000, unit: "шт"},
@@ -140,93 +139,68 @@ var cardCases = [
 //функція, що виконується по кліку на область карти
 var testFun = function (d) {
     d3.select("#overlay").style("display", "block");
-    var cont1 = d3.select("#block_red"); //змінна для назви ЗМІ
-    var cont2 = d3.select("#block_yellow1"); // змінна для суми
-    
+    // ------------------------ для данних з бази ----------------------------------------------
+    var cont_ZMI = d3.select("#block_red"); //контейнер для назви ЗМІ
+    var cont_totalSum = d3.select("#block_yellow1"); // контейнер для суми
+    // -----------------------------------------------------------------------
+
+
+    var sum = d3.select("div#block_yellow1 > p#sum").text().replace(/\s/g, ''); // сума фінансування видання
+
     // котейнери для випадкових карток
-    var cont3 = d3.select("#block_purple");
-    var cont4 = d3.select("#block_green");
-    var cont5 = d3.select("#block_blue");
-    var sum = d3.select("div#block_yellow1 > p#sum") // сума фінансування видання
-        .text();
-    sum = sum.replace(/\s/g, '');
+    var cont = [];
+    cont.push(d3.select("#block_purple"));
+    cont.push(d3.select("#block_green"));
+    cont.push(d3.select("#block_blue"));
 
 
     //обираємо три випадкових порівння для картки з даних cardCases
+    var rand = [];
+    //#1
+    var rand1 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    rand.push(rand1);
+
+    //#2
+    var rand2 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    while (rand2.type === rand1.type) {
+        rand2 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    }
+    rand.push(rand2);
+
+    //#3
     var rand3 = cardCases[Math.floor(Math.random() * cardCases.length)];
-    var rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
-    while(rand4.type === rand3.type) {
-       rand4 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    while (rand3.type === rand2.type || rand3.type === rand1.type) {
+        rand3 = cardCases[Math.floor(Math.random() * cardCases.length)];
     }
-    var rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
-    while(rand5.type === rand4.type || rand5.type === rand3.type) {
-        rand5 = cardCases[Math.floor(Math.random() * cardCases.length)];
+    rand.push(rand3);
+
+
+
+    //додаємо обані дані в потрібні контейнери
+    var addCard = function() {
+    for (var i = 0; i < 3; i++) {
+        cont[i].selectAll('h4').remove();
+        cont[i].selectAll('p').remove();
+        cont[i].selectAll('img.pic').remove();
+        cont[i].append('h4')
+            .attr('class', 'centered')
+            .html(function () {
+                return rand[i].type;
+            });
+        cont[i].append('img')
+            .attr('class', 'pic')
+            .attr('src', function () {
+                return rand[i].image;
+            });
+        cont[i].append('p')
+            .attr('class', 'price')
+            .html(function () {
+                return "x " + Math.round(sum / rand[i].price); //сума фінансування поділена на вартість послуги
+            });
     }
-   
-    
-    
+}();
 
 
-    //додаємо random картку в першу колонку
-    cont3.selectAll('h4').remove();
-    cont3.selectAll('img').remove();
-    cont3.selectAll('p').remove();
-    cont3.append('h4')
-        .attr('class', 'centered')
-        .html(function () {
-            return rand3.type;
-        });
-    cont3.append('img')
-        .attr('id', 'pic1')
-        .attr('src', function () {
-            return rand3.image;
-        });
-    cont3.append('p')
-        .attr('class', 'price')
-        .html(function () {
-            return "x " + Math.round(sum / rand3.price); //сума фінансування поділена на вартість послуги
-        });
-
-    //додаємо random картку в другу колонку
-    cont4.selectAll('h4').remove();
-    cont4.selectAll('img').remove();
-    cont4.selectAll('p').remove();
-    cont4.append('h4')
-        .attr('class', 'centered')
-        .html(function () {
-            return rand4.type;
-        });
-    cont4.append('img')
-        .attr('id', 'pic2')
-        .attr('src', function () {
-            return rand4.image;
-        });
-    cont4.append('p')
-        .attr('class', 'price')
-        .html(function () {
-            return "x " + Math.round(sum / rand4.price);
-        });
-
-
-    //додаємо random картку в третю колонку
-    cont5.selectAll('h4').remove();
-    cont5.selectAll('img').remove();
-    cont5.selectAll('p').remove();
-    cont5.append('h4')
-        .attr('class', 'centered')
-        .html(function () {
-            return rand5.type;
-        });
-    cont5.append('img')
-        .attr('id', 'pic3')
-        .attr('src', function () {
-            return rand5.image;
-        });
-    cont5.append('p')
-        .attr('class', 'price')
-        .html(function () {
-            return "x " + Math.round(sum / rand5.price);
-        });
 }; //end of testFun function
 
 
@@ -243,13 +217,3 @@ Array.prototype.contains = function (v) {
     return false;
 };
 
-//
-// var rand = [];
-// rand.push("Нерелігійні організації");
-// data.forEach(function (d, i) {
-//     d.orgs.forEach(function (k, j) {
-//         if (!cs.contains(k.section)) {
-//             cs.push(k.section);
-//         }
-//     })
-// });

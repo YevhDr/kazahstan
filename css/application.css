@@ -324,7 +324,7 @@ p.price {
   left: 50%;
   transform: translate(-50%); }
 
-#pic1, #pic2, #pic3 {
+.pic {
   position: absolute;
   width: 20vw;
   top: 50%;
