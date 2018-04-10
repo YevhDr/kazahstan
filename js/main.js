@@ -1,5 +1,5 @@
 var width = window.innerWidth * 0.8,
-    height = window.innerHeight * 0.8;
+    height = window.innerHeight * 0.7;
 
 
 /*--------------- Варіант # 1 з намальованою svg картою Казахстану----------------------------*/
@@ -32,33 +32,29 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
 
         //ПРОБЛЕМА!!!!!
         // polygon.getBBox() некоректно отримує висоту, ширину та x/y координати полігона
-        svg.selectAll(".regions-chart")
-            .each(function () {
-                d3.select(this)
-                    .datum(function () {
-                        var polygon = this; //отримується коректно
-                        var polygonParent = this.parentNode;
-                        var gId = this.id;
-                        var bbox = polygon.getBoundingClientRect();
-                        // alert(gId);
-                        return data.features
-                            .filter(function (d) {
-                                if (d.properties.NAME_1 === gId) {
-                                    // alert(d.properties.NAME_1 + gId);
-                                    d3.select(polygonParent)
-                                        .append('g')
-                                        // .attr("transform", function (d) {
-                                        //  return "translate(" + bbox.x + bbox.y  + ")";
-                                        //  })
-                                        .attr('x', 400000)
-                                        .attr('y', 400000)
-                                        .attr("class", "label")
-                                        .append('text')
-                                        .text(d.properties.VARNAME_1);
-                                }
-                            })
-                    })
-            });
+        // svg.selectAll(".regions-chart")
+        //     .each(function () {
+        //         d3.select(this)
+        //             .datum(function () {
+        //                 var polygon = this; //отримується коректно
+        //                 var polygonParent = this.parentNode;
+        //                 var gId = this.id;
+        //                 var bbox = polygon.getBoundingClientRect();
+        //                 // alert(gId);
+        //                 return data.features
+        //                     .filter(function (d) {
+        //                         if (d.properties.NAME_1 === gId) {
+        //                             // alert(d.properties.NAME_1 + gId);
+        //                             d3.select(polygonParent)
+        //                                 .append('g')
+        //                                 .attr("transform", "translate(" + (bbox.x * 10) + "," + (bbox.y * 10) + ")")
+        //                                 .attr("class", "label")
+        //                                 .append('text')
+        //                                 .text(d.properties.VARNAME_1);
+        //                         }
+        //                     })
+        //             })
+        //     });
     });
 
 });
