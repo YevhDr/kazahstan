@@ -1,7 +1,9 @@
+html {
+  font-size: 15px; }
+
 body {
   background: url(../img/map_background.jpg) no-repeat;
-  background-size: 100vw 100vh;
-  font-size: 14px; }
+  background-size: 100vw 100vh; }
 
 .abs-top {
   position: absolute;
@@ -116,7 +118,7 @@ h4 {
   margin-bottom: 20px;
   color: white;
   font-size: 1.5rem;
-  line-height: 2rem;
+  line-height: 1.8rem;
   font-weight: 800;
   text-align: center; }
 
