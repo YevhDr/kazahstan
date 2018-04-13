@@ -91,25 +91,26 @@ svg {
 #popup1 {
   z-index: 5; }
 
-.close-img, .arrow, #twitter {
+.close-img, .arrow {
   height: 30px;
   cursor: pointer; }
 
 #twitter {
+  height: 35px;
   background-color: white;
-  border-radius: 2px; }
+  border-radius: 2px;
+  padding: 3px; }
 
 h4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 0 0 0 0 !important;
+  text-align: center;
   color: white;
-  font-size: 1.5rem;
-  line-height: 1.8rem;
-  font-weight: 800;
-  text-align: center; }
+  font-size: 2vw;
+  line-height: 2.5vw;
+  font-weight: 800; }
 
 .social-close {
-  padding: 0 10px 0 10px;
+  padding: 0 15px 0 15px;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -159,6 +160,9 @@ h4 {
       height: 10vh; } }
 
 #block_yellow1, #block_red {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /*Portrait*/
   /* ----------- Galaxy S4, S5 and Note 3 ----------- */
   /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
@@ -227,10 +231,7 @@ p#sum {
   font-weight: 800;
   letter-spacing: 2px;
   color: black !important;
-  position: absolute;
-  top: 40%;
-  left: 25%;
-  transform: translate(-20%, -40%); }
+  position: absolute; }
 
 #block_blue,
 #block_purple,
@@ -311,8 +312,8 @@ p#sum {
   background: linear-gradient(to left top, #0f9a95 50%, #0f796f 50%); }
 
 p.price {
-  font-size: 2rem;
-  line-height: 2rem;
+  font-size: 2.5vw;
+  line-height: 3vw;
   font-weight: 800;
   color: white;
   position: absolute;
