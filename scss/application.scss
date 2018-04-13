@@ -13,7 +13,6 @@ html {
 body {
   background: url(../img/map_background.jpg) no-repeat;
   background-size: 100vw 100vh;
-
 }
 
 .abs-top {
@@ -54,16 +53,13 @@ h3 {
   font-size:1.6rem;
   line-height: 2rem;
   font-weight: 800;
-
 }
-
 
 svg {
   margin: 0;
   position:absolute;
   top: 10vh;
   left: 10vw;
-
 }
 
 #map {
@@ -73,9 +69,6 @@ svg {
 #regions-chart {
   padding: 5px;
   fill: #ffd400;
-  //stroke: blue;
-  //stroke-width: 3px;
-  /*stroke-opacity: 1;*/
   -webkit-background-clip: content;
 }
 
@@ -121,7 +114,6 @@ svg {
   height: 80vh;
 }
 
-
 #popup1 {
   z-index: 5;
 }
@@ -142,12 +134,22 @@ h4 {
   margin: 0 0 0 0!important;
   text-align: center;
   color:white;
-  font-size:2vw;
-  line-height: 2.5vw;
   font-weight: 800;
-
+  @media #{$brk-xlarge},
+  #{$brk-large}{
+    font-size:1.5vw;
+    line-height: 1.8vw;
+  }
+  @media #{$brk-medium},
+  #{$brk-narrow} {
+    font-size:1.8vw;
+    line-height: 2.5vw;
+  }
+  @media #{$brk-iphone} {
+    font-size:2.5vw;
+    line-height: 3vw;
+  }
 }
-
 
 .social-close {
   padding: 0 15px 0 15px;
@@ -170,6 +172,14 @@ h4 {
   /* ----------- Galaxy S4, S5 and Note 3 ----------- */
   @media screen
   and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+    height: 3vh;
+  }
+
+  @media screen
+  and (device-width: 360px)
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: portrait) {
@@ -200,6 +210,13 @@ h4 {
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: portrait) {
     height: 3vh;
+  }
+
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait) {
+    height: 5vh;
   }
 
 
@@ -233,6 +250,12 @@ h4 {
   and (min-device-width: 375px)
   and (max-device-width: 812px)
   and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+    height: 10vh;
+  }
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
   and (orientation: landscape) {
     height: 10vh;
   }
@@ -265,6 +288,14 @@ h4 {
   and (orientation: portrait) {
     height: 10vh;
   }
+
+  @media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+    height: 10vh;
+  }
   /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
   @media only screen
   and (min-device-width: 375px)
@@ -288,6 +319,12 @@ h4 {
   and (min-device-width: 375px)
   and (max-device-width: 812px)
   and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+    height: 10vh;
+  }
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
   and (orientation: portrait) {
     height: 10vh;
   }
@@ -323,6 +360,12 @@ h4 {
   and (min-device-width: 375px)
   and (max-device-width: 812px)
   and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+    height: 25vh;
+  }
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
   and (orientation: landscape) {
     height: 25vh;
   }
@@ -353,14 +396,11 @@ h4 {
 }
 
 p#sum {
-  font-size:4vw;
+  font-size:5vw;
   font-weight: 800;
   letter-spacing:2px;
   color:black!important;
   position:absolute;
-  //top: 40%;
-  //left: 25%;
-  //transform: translate(-20%, -40%);
 }
 
 // others
@@ -377,12 +417,19 @@ p#sum {
     height: 45vh;
   }
   @media #{$brk-spnarrow} {
-    height: 40vh;
+    height: 45vh;
   }
   /*Portrait*/
-  /* ----------- Galaxy S4, S5 and Note 3 ----------- */
+  /* ----------- Galaxy S4, S5, S6 and Note 3 ----------- */
   @media screen
   and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+    height: 20vh;
+  }
+  @media screen
+  and (device-width: 360px)
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: portrait) {
@@ -411,6 +458,20 @@ p#sum {
   and (min-device-width: 375px)
   and (max-device-width: 812px)
   and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+    height: 20vh;
+  }
+  /* ----------- iPad Pro 12 ----------- */
+  @media only screen
+  and (min-device-width: 1024px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    height: 20vh;
+  }
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
   and (orientation: portrait) {
     height: 20vh;
   }
@@ -449,6 +510,22 @@ p#sum {
   and (orientation: landscape) {
     height: 45vh;
   }
+
+  /* ----------- iPad Pro 12 ----------- */
+  @media only screen
+  and (min-device-width: 1366px)
+  and (max-device-width: 1366px)
+  and (orientation: landscape)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    height: 35vh;
+  }
+  @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: landscape){
+    height: 35vh;
+  }
+
 }
 
 #block_blue {
@@ -473,7 +550,6 @@ p.price {
   bottom:10px;
   left: 50%;
   transform: translate(-50%);
-
 }
 
 .pic {
@@ -485,7 +561,7 @@ p.price {
 }
 
 
-.region.republic {
-cursor: default;
-}
+//.region-republic {
+//cursor: default;
+//}
 
