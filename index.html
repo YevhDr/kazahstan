@@ -18,16 +18,15 @@
 <body>
 <div id="overlay">
     <div class="container">
-        <div class="row" style="background-color:#6b316e ">
-            <div id="social-close" class="col-xs-2">
-                <a style="margin-left:10px" href="https://twitter.com/intent/tweet?text=........." class="social-icons"><i
-                        class="fa fa-twitter-square"></i></a>
+        <div class="social-close" style="background-color:#6b316e ">
+            <div class="flex-item">
+                <a href="https://twitter.com/intent/tweet?text=........." class="social-icons">
+                    <img id="twitter" src="img/twitter-square.svg"/>
+                </a>
             </div>
+            <div class="fbtw flex-item">
+                <img class="arrow" onclick="testFun()" src="img/arrow2.svg"/>
 
-            <div class="col-xs-offset-8 col-xs-1">
-                <img class="arrow" onclick="testFun()" src="img/arrow2.svg"/> <!--по кліку на стрілку випадковим образом обираємо ЗМІ і виводимо картку по ньому -->
-            </div>
-            <div class="col-xs-1">
                 <a class="cross" href="#overlay"><img class="close-img" src="img/close2.svg"/></a>
             </div>
         </div>

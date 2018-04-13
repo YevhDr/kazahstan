@@ -127,32 +127,18 @@ svg {
 }
 
 .social-icons {
-  margin-top:10px;
-  position: fixed;
+
 }
 
-.close-img, .arrow {
-  height: 50%;
-  width:50%;
-  margin-top:10px;
+.close-img, .arrow, #twitter {
+  height: 30px;
   cursor: pointer;
 }
 
-.fa {
-  font-size: 30px!important;
+#twitter {
+  background-color: white;
+  border-radius: 2px;
 }
-
-.fa-twitter-square {
-  padding: 3px;
-  color: white;
-  float: right;
-  cursor: pointer;
-  border-radius: 5px;
-  &:hover{
-    color: yellow;
-  }
-}
-
 
 h4 {
   margin-top: 20px;
@@ -164,7 +150,12 @@ h4 {
   text-align: center;
 }
 
-#social-close {
+.social-close {
+  padding: 0 10px 0 10px;
+  display:flex;
+  width:100%;
+  justify-content: space-between;
+  align-items: center;
   @media #{$brk-xlarge},
   #{$brk-large}{
     height: 10vh;

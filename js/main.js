@@ -34,10 +34,10 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
                 d3.select(this).style('fill', '#ffd400');
 
             });
-        //по кліку відкриваємо вікно і генеруємо картку
 
-        //ПРОБЛЕМА!!!!!
-        //polygon.getBBox()///некоректно отримує висоту, ширину та x/y координати полігона
+
+
+
         // svg.selectAll(".regions-chart")
         //     .each(function () {
         //         d3.select(this)
@@ -53,7 +53,6 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
         //                             // alert(d.properties.NAME_1 + gId);
         //                             d3.select(polygonParent)
         //                                 .append('g')
-        // //в дзеркальному по у відображає чомусь і треба множити позицію на 10??????
         //                                 .attr("transform", "translate(" + (bbox.x * 10) + "," + (bbox.y * 10) + ")")
         //                                 .attr("class", "label")
         //                                 .append('text')

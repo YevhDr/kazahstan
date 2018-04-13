@@ -91,27 +91,13 @@ svg {
 #popup1 {
   z-index: 5; }
 
-.social-icons {
-  margin-top: 10px;
-  position: fixed; }
-
-.close-img, .arrow {
-  height: 50%;
-  width: 50%;
-  margin-top: 10px;
+.close-img, .arrow, #twitter {
+  height: 30px;
   cursor: pointer; }
 
-.fa {
-  font-size: 30px !important; }
-
-.fa-twitter-square {
-  padding: 3px;
-  color: white;
-  float: right;
-  cursor: pointer;
-  border-radius: 5px; }
-  .fa-twitter-square:hover {
-    color: yellow; }
+#twitter {
+  background-color: white;
+  border-radius: 2px; }
 
 h4 {
   margin-top: 20px;
@@ -122,7 +108,12 @@ h4 {
   font-weight: 800;
   text-align: center; }
 
-#social-close {
+.social-close {
+  padding: 0 10px 0 10px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   /*Portrait*/
   /* ----------- Galaxy S4, S5 and Note 3 ----------- */
   /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
@@ -134,37 +125,37 @@ h4 {
   /* ----------- iPhone 6+, 7+ and 8+ ----------- */
   /* ----------- iPhone X ----------- */ }
   @media (max-width: 2570px), (max-width: 1440px) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
   @media (max-width: 1285px), (max-width: 1024px) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
   @media (max-width: 767px) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
   @media screen and (device-width: 320px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
-    #social-close {
+    .social-close {
       height: 3vh; } }
   @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-    #social-close {
+    .social-close {
       height: 3vh; } }
   @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-    #social-close {
+    .social-close {
       height: 3vh; } }
   @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-    #social-close {
+    .social-close {
       height: 3vh; } }
   @media screen and (device-width: 320px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {
-    #social-close {
+    .social-close {
       height: 3vh; } }
   @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
   @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
   @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-    #social-close {
+    .social-close {
       height: 10vh; } }
 
 #block_yellow1, #block_red {
