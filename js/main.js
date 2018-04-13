@@ -20,18 +20,24 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
             .attr("height", height);
 
         var path = svg.selectAll("path")
-            .attr("class", "regions-chart")
+            .classed("regions-chart", true)
+            .on("click", testFun);
+
+
+        d3.selectAll('path.region')
             .on("mouseover", function (d) {
-                d3.select(this).style('cursor', 'pointer');//
+                d3.select(this).style('cursor', 'pointer');
+                d3.select(this).style('fill', '#faff5f');//
             })
             .on('mouseout', function (d) {
                 d3.select(this).style('cursor', 'default');
+                d3.select(this).style('fill', '#ffd400');
 
-            })
-            .on("click", testFun); //по кліку відкриваємо вікно і генеруємо картку
+            });
+        //по кліку відкриваємо вікно і генеруємо картку
 
         //ПРОБЛЕМА!!!!!
-        // polygon.getBBox() некоректно отримує висоту, ширину та x/y координати полігона
+        //polygon.getBBox()///некоректно отримує висоту, ширину та x/y координати полігона
         // svg.selectAll(".regions-chart")
         //     .each(function () {
         //         d3.select(this)
@@ -47,9 +53,11 @@ d3.json("data/kazakhstan_QGIS.geojson", function (data) {
         //                             // alert(d.properties.NAME_1 + gId);
         //                             d3.select(polygonParent)
         //                                 .append('g')
+        // //в дзеркальному по у відображає чомусь і треба множити позицію на 10??????
         //                                 .attr("transform", "translate(" + (bbox.x * 10) + "," + (bbox.y * 10) + ")")
         //                                 .attr("class", "label")
         //                                 .append('text')
+        //                                 .style('font-size', '304px')
         //                                 .text(d.properties.VARNAME_1);
         //                         }
         //                     })
